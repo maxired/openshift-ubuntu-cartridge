@@ -3,14 +3,18 @@
 # script. The application will work only if it binds to
 # $OPENSHIFT_INTERNAL_IP:8080
 
+if mkdir mylock; then
+rm -rf proot-x86_64;
 wget https://github.com/cedric-vincent/proot-static-build/raw/master/static/proot-x86_64
 chmod +x ./proot-x86_64
-mkdir ubuntu
-cd ubuntu
+rm -rf ubuntu/*;
+mkdir ubuntu;
+cd ubuntu;
 wget http://download.openvz.org/template/precreated/ubuntu-12.04-x86_64.tar.gz
 tar xzf ubuntu-12.04-x86_64.tar.gz
 rm -rf ubuntu-12.04-x86_64.tar.gz
 cd ..
 nohup ./proot-x86_64 -r ubuntu -0 -b /dev -b /etc/resolv.conf -b /proc bash
 
+fi
 #nohup $OPENSHIFT_REPO_DIR/diy/testrubyserver.rb $OPENSHIFT_DIY_IP $OPENSHIFT_REPO_DIR/diy > $OPENSHIFT_DIY_DIR/logs/server.log 2>&1 &
