@@ -12,6 +12,7 @@ mkdir ubuntu;
 cd ubuntu;
 wget http://download.openvz.org/template/precreated/ubuntu-12.04-x86_64.tar.gz
 tar xzf ubuntu-12.04-x86_64.tar.gz
+echo "source /etc/environment" >> etc/bash.bashrc
 rm -rf ubuntu-12.04-x86_64.tar.gz
 cd ..
 nohup ./proot-x86_64 -r ubuntu -0 -b /dev -b /etc/resolv.conf -b /proc bash
