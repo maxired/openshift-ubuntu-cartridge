@@ -2,10 +2,15 @@
 # The logic to start up your application should be put in this
 # script. The application will work only if it binds to
 # $OPENSHIFT_INTERNAL_IP:8080
+
+PROOT="proot";
+PROOT_CMD_LINE="./proot -r ubuntu -0 -b /dev -b /etc/resolv.conf -b /proc" 
+PROOT_CMD_LINE_ROOT="$PROOT_CMD_LINE  -0" 
+
 if mkdir mylock; then
-rm -rf proot-x86_64;
+rm -rf $PROOT;
 wget https://github.com/maxired/proot-static-build/raw/master/static/proot
-chmod +x ./proot-x86_64
+chmod +x $PROOT
 rm -rf ubuntu/*;
 mkdir ubuntu;
 cd ubuntu;
@@ -21,8 +26,32 @@ cd ubuntu
 wget http://nodejs.org/dist/v0.8.25/node-v0.8.25-linux-x64.tar.gz
 tar xzf node-v0.8.25-linux-x64.tar.gz 
 rm -rf node-v0.8.25-linux-x64.tar.gz
-./proot-x86_64 -r ubuntu -0 -b /dev -b /etc/resolv.conf -b /proc apt-get update
-./proot-x86_64 -r ubuntu -0 -b /dev -b /etc/resolv.conf -b /proc apt-get install -y build-essential
+
+
+rm -rf install.sh
+echo "export PATH=/sbin:$PATH" >> install.sh
+echo "apt-get -y update" >> install.sh 
+echo "apt-get -y install build-essential" >> install.sh 
+chmod +x install.sh
+cd ..
+$PROOT_CMD_LINE_ROOT /install.sh
+
+rm -rf ubuntu/root
+mkdir -p ubuntu/root/
+cd ubuntu/root
+git clone https://github.com/maxired/openshift-tty.js
+cd ..
+echo "cd /root/openshift-tty.js && /node-v0.8.25-linux-x64/bin/npm i" >> clone.sh
+chmod +x clone.sh
+cd ..
+$PROOT_CMD_LINE /clone.sh
 
 fi
+cd ubuntu
+echo "cd /root/openshift-tty.js && /node-v0.8.25-linux-x64/bin/node index.js" >> run.sh
+chmod +x run.sh
+cd ..
+nohup $PROOT_CMD_LINE /run.sh
+
+
 #nohup $OPENSHIFT_REPO_DIR/diy/testrubyserver.rb $OPENSHIFT_DIY_IP $OPENSHIFT_REPO_DIR/diy > $OPENSHIFT_DIY_DIR/logs/server.log 2>&1 &
