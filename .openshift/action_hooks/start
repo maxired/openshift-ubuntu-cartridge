@@ -4,7 +4,7 @@
 # $OPENSHIFT_INTERNAL_IP:8080
 
 PROOT="proot";
-PROOT_CMD_LINE="./proot -r ubuntu -0 -b /dev -b /etc/resolv.conf -b /proc" 
+PROOT_CMD_LINE="./proot -r ubuntu -b /dev -b /etc/resolv.conf -b /proc" 
 PROOT_CMD_LINE_ROOT="$PROOT_CMD_LINE  -0" 
 
 if mkdir mylock; then
@@ -51,7 +51,7 @@ cd ubuntu
 echo "cd /root/openshift-tty.js && /node-v0.8.25-linux-x64/bin/node index.js" >> run.sh
 chmod +x run.sh
 cd ..
-nohup $PROOT_CMD_LINE /run.sh
+nohup $PROOT_CMD_LINE /run.sh &
 
 
 #nohup $OPENSHIFT_REPO_DIR/diy/testrubyserver.rb $OPENSHIFT_DIY_IP $OPENSHIFT_REPO_DIR/diy > $OPENSHIFT_DIY_DIR/logs/server.log 2>&1 &

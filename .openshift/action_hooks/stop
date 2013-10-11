@@ -8,3 +8,4 @@ then
 else
     kill `ps -ef | grep testrubyserver.rb | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
 fi
+killall node;
