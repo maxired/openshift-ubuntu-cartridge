@@ -14,5 +14,5 @@ After this , you can connect to the gears and go inside your container
 
 ```
 cd diy;
-./proot-x86_64 -r ubuntu -0 -b /dev -b /etc/resolv.conf -b /proc bash
+./proot -r ubuntu -0 -b /dev -b /etc/resolv.conf -b /proc bash
 ```
