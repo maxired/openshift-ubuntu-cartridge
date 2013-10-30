@@ -17,7 +17,7 @@ cd ubuntu;
 wget http://download.openvz.org/template/precreated/ubuntu-12.04-x86_64.tar.gz
 tar xzf ubuntu-12.04-x86_64.tar.gz
 echo "source /etc/environment" >> etc/bash.bashrc
-echo "export PATH=/node-v0.8.25-linux-x64/bin/:$PATH" >> etc/bash.bashrc
+echo "export PATH=/node-v0.8.25-linux-x64/bin/:/sbin:$PATH" >> etc/bash.bashrc
 echo "export HOME=/root" >> etc/bash.bashrc
 
 rm -rf ubuntu-12.04-x86_64.tar.gz
@@ -36,22 +36,8 @@ chmod +x install.sh
 cd ..
 $PROOT_CMD_LINE_ROOT /install.sh
 
-rm -rf ubuntu/root
-mkdir -p ubuntu/root/
-cd ubuntu/root
-git clone https://github.com/maxired/openshift-tty.js
-cd ..
-echo "cd /root/openshift-tty.js && /node-v0.8.25-linux-x64/bin/npm i" >> clone.sh
-chmod +x clone.sh
-cd ..
-$PROOT_CMD_LINE /clone.sh
-
 fi
-cd ubuntu
-echo "cd /root/openshift-tty.js && /node-v0.8.25-linux-x64/bin/node index.js" >> run.sh
-chmod +x run.sh
-cd ..
-nohup $PROOT_CMD_LINE /run.sh &
+
 
 
 #nohup $OPENSHIFT_REPO_DIR/diy/testrubyserver.rb $OPENSHIFT_DIY_IP $OPENSHIFT_REPO_DIR/diy > $OPENSHIFT_DIY_DIR/logs/server.log 2>&1 &
