@@ -1,6 +1,7 @@
 #Openshift-ubuntu-cartridge
 
-This (DIY) cartridge allow to run a Ubuntu (12.04) inside a Gears.
+This (DIY) cartridge allow to run a Ubuntu (~~12.04~~) inside a Gears.
+####✅UPDATE! Ubuntu 16.04 LTS and NodeJs v6.6.0####
 
 This is done with proot.
 Thanks to the '-0' option of proot (similar to fakeroot), the Ubuntu behave just as if you were root.
